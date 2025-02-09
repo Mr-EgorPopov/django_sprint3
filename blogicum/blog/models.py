@@ -1,8 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
-from constants import max_length
-
+from blogicum.constants import MAX_LENGTH
 
 User = get_user_model()
 
@@ -24,7 +23,7 @@ class BaseModel(models.Model):
 
 class Category(BaseModel):
     title = models.CharField(
-        max_length=max_length,
+        max_length=MAX_LENGTH,
         verbose_name='Заголовок',
     )
     description = models.TextField(
@@ -47,7 +46,7 @@ class Category(BaseModel):
 
 class Location(BaseModel):
     name = models.CharField(
-        max_length=max_length,
+        max_length=MAX_LENGTH,
         verbose_name='Название места',
     )
 
@@ -61,7 +60,7 @@ class Location(BaseModel):
 
 class Post(BaseModel):
     title = models.CharField(
-        max_length=max_length,
+        max_length=MAX_LENGTH,
         verbose_name='Заголовок',
     )
     text = models.TextField(
@@ -75,21 +74,21 @@ class Post(BaseModel):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='set_of_posts',
+        related_name='posts',
         verbose_name='Автор публикации',
     )
     location = models.ForeignKey(
         Location,
         on_delete=models.SET_NULL,
         null=True,
-        related_name='set_of_posts',
+        related_name='posts',
         verbose_name='Местоположение',
     )
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
         null=True,
-        related_name='set_of_posts',
+        related_name='posts',
         verbose_name='Категория',
     )
 

@@ -2,8 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 
 from blog.models import Post, Category
-
-from constants import number_of_limit
+from blogicum.constants import TOTAL
 
 
 def get_published_posts():
@@ -18,7 +17,7 @@ def get_published_posts():
 def index(request):
     """Главная страница блога"""
     template = 'blog/index.html'
-    post_list = get_published_posts()[:number_of_limit]
+    post_list = get_published_posts()[:TOTAL]
     context = {'post_list': post_list}
     return render(request, template, context)
 
@@ -43,7 +42,7 @@ def category_posts(request, category_slug):
         is_published=True
     )
     post_list = get_published_posts().filter(
-        category__slug=category_slug
+        category=category
     )
     context = {'category': category, 'post_list': post_list}
     return render(request, template, context)
